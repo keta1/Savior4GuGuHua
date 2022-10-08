@@ -8,8 +8,14 @@ plugins {
 group = "icu.ketal"
 version = "1.0-SNAPSHOT"
 
+application {
+    applicationDefaultJvmArgs += "-Djava.library.path=" +
+            file("${project(":libs:dexkit").buildDir}/lib/main/debug").absolutePath
+}
+
 dependencies {
     implementation(projects.libs.dexkit)
+    implementation("net.java.dev.jna:jna:5.12.1")
 }
 
 tasks.withType<KotlinCompile> {
