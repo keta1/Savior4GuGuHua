@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    implementation("net.java.dev.jna:jna:5.12.1")
+    api("net.java.dev.jna:jna:5.12.1")
 }
 
 cmake {

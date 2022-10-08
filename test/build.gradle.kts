@@ -15,7 +15,6 @@ application {
 
 dependencies {
     implementation(projects.libs.dexkit)
-    implementation("net.java.dev.jna:jna:5.12.1")
 }
 
 tasks.withType<KotlinCompile> {
