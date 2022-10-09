@@ -5,6 +5,7 @@ import io.luckypray.dexkit.descriptor.member.DexFieldDescriptor
 import io.luckypray.dexkit.descriptor.member.DexMethodDescriptor
 import java.io.Closeable
 import java.net.URL
+import kotlin.jvm.Throws
 
 class DexKitBridge private constructor(apkPath: String) : Closeable {
 
@@ -275,24 +276,15 @@ class DexKitBridge private constructor(apkPath: String) : Closeable {
         const val FLAG_USING = FLAG_GETTING or FLAG_SETTING
 
         @JvmStatic
-        fun create(apkPath: String): DexKitBridge? {
+        fun create(apkPath: String): DexKitBridgeProvider {
             val helper = DexKitBridge(apkPath)
-            return if (helper.isValid) helper else null
-        }
+            return object : DexKitBridgeProvider {
+                override val helper: DexKitBridge
+                    @Throws(IllegalStateException::class)
+                    get() = if (helper.isValid) helper else throw IllegalStateException("DexKitBridge is invalid")
 
-        @JvmStatic
-        fun create(loader: ClassLoader): DexKitBridge? {
-            loader.loadClass("java.lang.ClassLoader").declaredMethods.first {
-                it.name == "findResource"
-                    && it.parameterTypes.size == 1
-                    && it.parameterTypes[0] == String::class.java
-                    && it.returnType == URL::class.java
-            }.let { method ->
-                method.isAccessible = true
-                val url = method.invoke(loader, "AndroidManifest.xml") as URL
-                url.path.substring(5, url.path.length - 21).let {
-                    val helper = DexKitBridge(it)
-                    return if (helper.isValid) helper else null
+                override fun close() {
+                    helper.close()
                 }
             }
         }
@@ -432,4 +424,8 @@ class DexKitBridge private constructor(apkPath: String) : Closeable {
             dexPriority: IntArray?
         ): Map<String, IntArray>
     }
+}
+
+interface DexKitBridgeProvider : Closeable {
+    val helper: DexKitBridge
 }

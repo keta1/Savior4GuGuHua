@@ -23,5 +23,6 @@ rootProject.name = "Savior4GuGuHua"
 
 include(
     ":test",
-    ":libs:dexkit"
+    ":libs:dexkit",
+    ":libs:stub"
 )
