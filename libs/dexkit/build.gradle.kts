@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm")
     `java-library`
-    id("io.github.tomtzook.gradle-cmake") version "1.1.0"
+    id("io.github.tomtzook.gradle-cmake") version "1.2.2"
 }
 
 dependencies {
