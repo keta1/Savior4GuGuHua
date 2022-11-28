@@ -12,6 +12,6 @@ interface Log : Library {
     fun setup_log_stream(verbose: Boolean, callback: log_callback_t)
 
     companion object {
-        val instance: Log by nativeLib("log")
+        val instance: Log by nativeLib("dexkit")
     }
 }
