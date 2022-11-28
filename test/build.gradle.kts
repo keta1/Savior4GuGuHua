@@ -10,8 +10,7 @@ plugins {
 group = "icu.ketal"
 version = "1.0-SNAPSHOT"
 
-val library: String = file("${project(":libs:dexkit").buildDir}/cmake/cc/linux-amd64").absolutePath
-println(library)
+val library: String = buildDir.resolve("library").absolutePath
 val args = arrayOf(
     "-Djava.library.path=$library",
     "-Djna.library.path=$library"
@@ -43,3 +42,25 @@ tasks.withType<KotlinCompile> {
 application {
     mainClass.set("MainKt")
 }
+
+fun afterEval() {
+    val cmakeBuild by tasks.registering {
+        group = "build"
+        val build = project(":libs:dexkit").tasks.getByName("cmakeBuild")
+        dependsOn(build)
+        doLast {
+            val outDir = project(":libs:dexkit").buildDir.resolve("cmake/cc").listFiles()!!.first()
+            val libs = outDir.listFiles()!!.filter { it.name.startsWith("lib") }
+            libs.forEach {
+                it.copyTo(file("$library/${it.name}"), true)
+            }
+        }
+    }
+    tasks.jar.get().dependsOn(cmakeBuild)
+}
+
+afterEvaluate {
+    afterEval()
+}
+
+evaluationDependsOn(":libs:dexkit")
