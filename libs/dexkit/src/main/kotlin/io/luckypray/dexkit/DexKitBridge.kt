@@ -12,7 +12,6 @@ class DexKitBridge private constructor(apkPath: String) : Closeable {
     private var token: Long = 0L
 
     init {
-        System.loadLibrary("dexkit")
         token = nativeInitDexKit(apkPath)
     }
 
