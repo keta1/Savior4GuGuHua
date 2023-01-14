@@ -15,7 +15,7 @@ include_directories(${JAVA_INCLUDE_PATH2})
 include_directories(include)
 
 add_library(${PROJECT_NAME} SHARED
-        core/native-bridge.cpp)
+        ../../../DexKit/Android/dexkit/src/main/cpp/native-bridge.cpp)
 
 target_link_libraries(${PROJECT_NAME}
         dex_kit_static)
