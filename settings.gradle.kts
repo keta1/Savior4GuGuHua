@@ -22,7 +22,7 @@ dependencyResolutionManagement {
 rootProject.name = "Savior4GuGuHua"
 
 include(
-    ":test",
+    ":main",
     ":libs:dexkit",
     ":libs:stub"
 )
