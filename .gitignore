@@ -16,5 +16,5 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
-dex
+test/dex
 cmake-build-debug

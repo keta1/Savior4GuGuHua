@@ -1,16 +1,5 @@
+#include <iostream>
 #include <android/log.h>
-#include "nativestreambuf.h"
-
-typedef void (*log_callback_t)(const char *);
-
-std::ostream *os;
-
-extern "C" void setup_log_stream(bool verbose, log_callback_t callback) {
-    static native_streambuf log_streambuf;
-    log_streambuf.set_callback(callback);
-    static std::ostream stream(&log_streambuf);
-    os = &stream;
-}
 
 int __android_log_print(int prio, const char *tag,  const char *fmt, ...) {
     va_list varg1;
@@ -56,6 +45,6 @@ int __android_log_print(int prio, const char *tag,  const char *fmt, ...) {
             level = 'D';
             break;
     }
-    *os << level <<tag << " ==> " << static_cast<const char *>(buffer) << std::endl;
+    std::cout << level <<tag << " ==> " << static_cast<const char *>(buffer) << std::endl;
     return 0;
 }

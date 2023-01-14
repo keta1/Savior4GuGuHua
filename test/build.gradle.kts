@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm")
     java
-    id("com.google.devtools.ksp") version "1.7.20-1.0.6"
+    id("com.google.devtools.ksp") version "1.8.0-1.0.8"
     application
 }
 
@@ -12,8 +12,7 @@ version = "1.0-SNAPSHOT"
 
 val library: String = buildDir.resolve("library").absolutePath
 val args = arrayOf(
-    "-Djava.library.path=$library",
-    "-Djna.library.path=$library"
+    "-Djava.library.path=$library"
 )
 
 application {

@@ -15,7 +15,6 @@ include_directories(${JAVA_INCLUDE_PATH2})
 include_directories(include)
 
 add_library(${PROJECT_NAME} SHARED
-        log/nativestreambuf.h
         log/log.cc
         core/native-bridge.cpp)
 
