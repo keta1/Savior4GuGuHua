@@ -7,31 +7,24 @@ import java.util.Locale
 val isWindows
     get() = System.getProperty("os.name").lowercase(Locale.getDefault()).contains("windows")
 
-fun loadDexKit() {
-    if (isWindows) {
-        System.loadLibrary("libdexkit")
-    } else {
-        System.loadLibrary("dexkit")
-    }
+fun loadLibrary(name: String) {
+    System.loadLibrary(if (isWindows) "lib$name" else name)
 }
 
 suspend fun main() {
-    loadDexKit()
+    loadLibrary("dexkit")
     withContext(Dispatchers.IO) {
         val file = File("dex/play/8.2.11_1380.apk")
-        println(file.exists())
         find(file.absolutePath)
     }
 }
 
 suspend fun find(path: String) {
-    DexKitBridge.create(path).use {
-        with(it) {
-            println(helper.getDexNum())
-            val res = helper.findMethodUsingString("imei")
-            res.forEach {
-                println(it.descriptor)
-            }
+    DexKitBridge.create(path)?.use { kit ->
+        println(kit.getDexNum())
+        val res = kit.findMethodUsingString("imei")
+        res.forEach {
+            println(it.descriptor)
         }
     }
 }

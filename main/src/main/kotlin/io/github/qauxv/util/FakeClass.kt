@@ -1,7 +1,5 @@
 package io.github.qauxv.util
 
-import io.luckypray.dexkit.DexKitBridgeProvider
-
 data class FakeClass(
     val typeSig: String
 ) {
@@ -9,9 +7,4 @@ data class FakeClass(
     companion object {
 
     }
-}
-
-context(DexKitBridgeProvider)
-fun load(className: String): FakeClass? {
-    return null
 }
