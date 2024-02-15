@@ -22,7 +22,7 @@ application {
 dependencies {
     implementation(projects.libs.stub)
     implementation(projects.libs.dexkit)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
     implementation("com.github.livefront.sealed-enum:runtime:0.6.0")
     ksp("com.github.livefront.sealed-enum:ksp:0.6.0")
     implementation(kotlin("stdlib-jdk8"))
