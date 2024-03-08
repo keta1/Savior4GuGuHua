@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm")
     java
-    id("com.google.devtools.ksp") version "1.8.20-1.0.10"
+    id("com.google.devtools.ksp") version "1.9.23-1.0.19"
     application
 }
 
